@@ -1,0 +1,9 @@
+# Editor directories and files
+.vscode
+
+# Log files
+__pycache__
+app/__pycache__
+
+#local env files
+.env
