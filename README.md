@@ -2,19 +2,19 @@
 
 > Twitter sentiment analysis web application
 
-## AUTHOR
+### AUTHORS
 
 * Victor Kariuki.
 * Dennis Kamau (Credits).
 
-## SUPPORT & CONTACT
+### SUPPORT & CONTACT
 * Mobile number: (+254) 716560444
 
 * Email Address: karizvic@gmail.com
 
 * github-username: victor-kariuki(maish)
 
-# License
+### LICENSE
 The app is licensed by **MIT**.
 
 MIT (c) 2019
