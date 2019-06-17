@@ -2,6 +2,9 @@
 
 > Twitter sentiment analysis web application
 
+## INSTALLATION
+
+
 ### AUTHORS
 
 * Victor Kariuki.
@@ -19,4 +22,4 @@ The app is licensed by **MIT**.
 
 MIT (c) 2019
 
-Feel FREE to contribute to make the CLI better for easier use by others.
+Feel FREE to contribute to make the app better for easier use by others.
