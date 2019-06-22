@@ -4,6 +4,7 @@
 # Log files
 __pycache__
 app/__pycache__
+app/resources/__pycache__
 
 #local env files
 .env
