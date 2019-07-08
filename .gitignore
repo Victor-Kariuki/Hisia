@@ -8,3 +8,6 @@ app/resources/__pycache__
 
 #local env files
 .env
+
+# migrations
+migrations/

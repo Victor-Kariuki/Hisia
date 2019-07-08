@@ -10,9 +10,6 @@ import tweepy
 # local imports
 from config import app_config
 
-# resources imports
-from app.resources import Users
-
 # Initialize the imports
 db = SQLAlchemy()
 
@@ -24,7 +21,7 @@ def create_app(env_name):
 
   db.init_app(app)
 
-  Migrate(db, app)
+  migrate = Migrate(app=app, db=db)
 
   from app.models import User, Location, Search, SearchDetail
 
@@ -32,6 +29,9 @@ def create_app(env_name):
   @app.shell_context_processor
   def make_shell_context():
     return dict(app=app, db=db, User=User, Location=Location, Search=Search, SearchDetail=SearchDetail)
+
+  # resources imports
+  from app.resources.user import Users, Login, Signup, Logout, UsersList
 
   # register resources
   api.add_resource(Users, '/api/v1/users')

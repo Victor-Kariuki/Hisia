@@ -7,7 +7,6 @@ import os
 
 # 3rd party imports
 from werkzeug.security import generate_password_hash, check_password_hash
-from passlib.apps import custom_app_context as pwd_context
 import jwt
 
 # local imports
@@ -84,7 +83,7 @@ class Location(db.Model):
   postal_town = db.Column(db.String(64))
   postal_code = db.Column(db.String(64))
   postal_address = db.Column(db.String(64))
-  user_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+  user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
 class Search(db.Model):

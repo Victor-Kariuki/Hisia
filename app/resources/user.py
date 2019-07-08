@@ -11,17 +11,19 @@ class Login(Resource):
   def post(self):
     user = User.query.filter_by(email=request.data['email']).first()
     if user is not None:
-      try:
-        company_name = request.data['company_name']
-        email = request.data['email']
-        password = request.data['password']
-        user = User(company_name=company_name, email=email)
-        user.hash_password(password)
-        user.save()
-
+      company_name = request.data['company_name']
+      email = request.data['email']
+      password = request.data['password']
+      user = User(company_name=company_name, email=email)
+      user.hash_password(password)
+      user.save()
 
 
 class Signup(Resource):
+  def post(self):
+    pass
+
+class Logout(Resource):
   def post(self):
     pass
 
