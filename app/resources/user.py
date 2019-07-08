@@ -1,31 +1,31 @@
 # app/resources/user
 
 # 3rd party imports
-from flask.views import MethodView
+from flask_restful import Resource
 from flask import request, jsonify
 
 # local imports
 from app.models import User
 
-class Login(MethodView):
+class Login(Resource):
   def post(self):
     user = User.query.filter_by(email=request.data['email']).first()
     if user is not None:
       try:
-        username = request.data['username']
+        company_name = request.data['company_name']
         email = request.data['email']
         password = request.data['password']
-        user = User(username=username, email=email)
+        user = User(company_name=company_name, email=email)
         user.hash_password(password)
         user.save()
 
 
 
-class Signup(MethodView):
+class Signup(Resource):
   def post(self):
     pass
 
-class Users(MethodView):
+class Users(Resource):
   def get(self):
     return { "greetings": "Hello World" }
 
@@ -35,6 +35,6 @@ class Users(MethodView):
   def delete(self, user_id):
     pass
 
-class UsersList(MethodView):
+class UsersList(Resource):
   def get(self):
     pass

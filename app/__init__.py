@@ -11,7 +11,7 @@ import tweepy
 from config import app_config
 
 # resources imports
-from app.resources.user import Users
+from app.resources import Users
 
 # Initialize the imports
 db = SQLAlchemy()
@@ -26,15 +26,14 @@ def create_app(env_name):
 
   Migrate(db, app)
 
-  from app.models import User
+  from app.models import User, Location, Search, SearchDetail
 
   # create flask shell
   @app.shell_context_processor
   def make_shell_context():
-    return dict(app=app, db=db, User=User)
+    return dict(app=app, db=db, User=User, Location=Location, Search=Search, SearchDetail=SearchDetail)
 
   # register resources
   api.add_resource(Users, '/api/v1/users')
-
 
   return app
