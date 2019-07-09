@@ -5,6 +5,7 @@ from flask import Flask, json, request
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_marshmallow import Marshmallow
 import tweepy
 
 # local imports
@@ -12,6 +13,7 @@ from config import app_config
 
 # Initialize the imports
 db = SQLAlchemy()
+ma = Marshmallow()
 
 def create_app(env_name):
   app = Flask(__name__)
@@ -21,6 +23,8 @@ def create_app(env_name):
 
   db.init_app(app)
   migrate = Migrate(app=app, db=db)
+
+  ma.init_app(app)
 
   from app.models import User, Location, Search, SearchDetail
 

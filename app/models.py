@@ -7,7 +7,7 @@ import os
 
 # 3rd party imports
 from werkzeug.security import generate_password_hash, check_password_hash
-import jwt
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
 # local imports
 from app import db
@@ -20,37 +20,23 @@ class User(db.Model):
   __tablename__ = 'users'
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-  uuid = db.Column(db.Integer, default=uuid4().hex, nullable=False)
+  uuid = db.Column(db.String(128), default=uuid4().hex, nullable=False)
   company_name = db.Column(db.String(32), index=True, unique=True, nullable=False)
   email = db.Column(db.String(64), unique=True, index=True, nullable=False)
   password_hash = db.Column(db.String(128), nullable=False)
   date_created = db.Column(db.DateTime, default=datetime.utcnow())
 
-  def __init__(self, company_name, email):
+  def __init__(self, company_name, email, password):
     self.company_name = company_name
     self.email = email
-
-  def hash_password(self, password):
     self.password_hash = generate_password_hash(password)
 
   def verify_password(self, password):
     return check_password_hash(self.password_hash, password)
 
-  def generate_token(self, id):
-    try:
-      payload = {
-        'exp': datetime.utcnow() + timedelta(minutes=5),
-        'iat': datetime.utcnow(),
-        'sub': id
-      }
-      jwt_string = jwt.encode(
-        payload,
-        os.getenv('SECRET_KEY'),
-        algorithm='HS256'
-      )
-      return jwt_string
-    except Exception as e:
-      return str(e)
+  def generate_auth_token(self, expiration = 600):
+    s = Serializer(os.getenv('SECRET_KEY'), expires_in=expiration)
+    return s.dumps({ 'id': self.id })
 
   def save(self):
     db.session.add(self)
@@ -60,15 +46,16 @@ class User(db.Model):
     return '<user: {}>'.format(self.username)
 
   @staticmethod
-  def decode_token(token):
+  def verify_token(token):
+    s = Serializer(os.getenv('SECRET_KEY'))
     try:
-      payload = jwt.decode(token, os.getenv('SECRET_KEY'))
-      return payload['sub']
-    except jwt.ExpiredSignatureError:
+      data = s.loads(token)
+    except SignatureExpired:
       return "Expired token. Please login to get a new token"
-    except jwt.InvalidTokenError:
+    except BadSignature:
       return "Invalid token. Please register or login"
-
+    user = User.query.get(data['id'])
+    return user
 
 
 class Location(db.Model):

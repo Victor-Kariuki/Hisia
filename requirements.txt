@@ -4,6 +4,7 @@ certifi==2019.3.9
 chardet==3.0.4
 Click==7.0
 Flask==1.0.3
+flask-marshmallow==0.10.1
 Flask-Migrate==2.5.2
 Flask-RESTful==0.3.7
 Flask-SQLAlchemy==2.4.0
@@ -12,9 +13,9 @@ itsdangerous==1.1.0
 Jinja2==2.10.1
 Mako==1.0.12
 MarkupSafe==1.1.1
+marshmallow==2.19.5
 mysqlclient==1.4.2.post1
 oauthlib==3.0.1
-PyJWT==1.7.1
 PySocks==1.7.0
 python-dateutil==2.8.0
 python-dotenv==0.10.3
