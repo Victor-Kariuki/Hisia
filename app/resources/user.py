@@ -12,21 +12,38 @@ from app.schemas import user_schema, users_schema
 
 class Login(Resource):
   def post(self):
+    '''
+    authenticate user
+    '''
     user = User.query.filter_by(email=request.get_json().get('email')).first()
-    if user is not None:
-      company_name = request.get_json().get('company_name')
-      email = request.get_json().get('email')
-      password = request.get_json().get('password')
-      user = User(company_name=company_name, email=email)
-      user.hash_password(password)
-      user.save()
-      token = user.generate_token(user.uuid)
+    password = request.get_json().get('password')
+    if user is not None and user.verify_password(password):
+      '''
+      checks if user exists and verifies the password
+      '''
+      token = user.generate_auth_token()
+      result = user_schema.dump(user).data
+      response = {
+        'status': 'Success',
+        'data': result,
+        'token': token.decode('ascii'),
+        'message': 'Successfully Logged In. Welcome to Hisia'
+      }
+      return response, 200
+    else:
+      '''
+      returns an error message if the user doesn't exists
+      '''
+      response = {
+        'status': 'Failed',
+        'data': result,
+        'message': 'User does not exists. Please Register'
+      }
+      return response, 400
+
 
 
 class Signup(Resource):
-  def get(self):
-    return {'message': 'Hello World'}
-
   def post(self):
     '''
     create a new user
@@ -69,9 +86,11 @@ class Logout(Resource):
   def post(self):
     pass
 
-class Users(Resource):
+class Profile(Resource):
   def get(self):
-    return { "greetings": "Hello World" }
+    users = User.get_all()
+    users = users_schema.dump(users).data
+
 
   def put(self, user_id):
     pass
@@ -79,6 +98,8 @@ class Users(Resource):
   def delete(self, user_id):
     pass
 
-class UsersList(Resource):
+class Users(Resource):
   def get(self):
-    pass
+    users = User.get_all()
+    users = users_schema.dump(users).data
+    return {'status': 'success', 'data': users}, 200

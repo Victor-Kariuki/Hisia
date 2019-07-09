@@ -42,6 +42,9 @@ class User(db.Model):
     db.session.add(self)
     db.session.commit()
 
+  def get_all():
+    return User.query.all()
+
   def repr(self):
     return '<user: {}>'.format(self.username)
 

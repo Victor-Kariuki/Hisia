@@ -34,10 +34,11 @@ def create_app(env_name):
     return dict(app=app, db=db, User=User, Location=Location, Search=Search, SearchDetail=SearchDetail)
 
   # resources imports
-  from app.resources.user import Users, Login, Signup, Logout, UsersList
+  from app.resources.user import Users, Login, Signup, Logout, Profile
 
   # register resources
-  api.add_resource(Users, '/api/v1/users')
+  api.add_resource(Users, '/api/v1/users', endpoint = 'users')
+  api.add_resource(Profile, '/api/v1/users/<string:uuid>', endpoint='user')
   api.add_resource(Login, '/api/v1/login')
   api.add_resource(Signup, '/api/v1/signup')
   api.add_resource(Logout, '/api/v1/logout')
