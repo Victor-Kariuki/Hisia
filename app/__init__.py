@@ -20,7 +20,6 @@ def create_app(env_name):
   api = Api(app)
 
   db.init_app(app)
-
   migrate = Migrate(app=app, db=db)
 
   from app.models import User, Location, Search, SearchDetail
@@ -35,5 +34,8 @@ def create_app(env_name):
 
   # register resources
   api.add_resource(Users, '/api/v1/users')
+  api.add_resource(Login, '/api/v1/login')
+  api.add_resource(Signup, '/api/v1/signup')
+  api.add_resource(Logout, '/api/v1/logout')
 
   return app

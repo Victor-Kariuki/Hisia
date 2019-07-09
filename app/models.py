@@ -19,11 +19,11 @@ class User(db.Model):
 
   __tablename__ = 'users'
 
-  id = db.Column(db.Integer, primary_key=True)
-  uuid = db.Column(db.Integer, default=uuid4().hex)
-  company_name = db.Column(db.String(32), index=True, unique=True)
-  email = db.Column(db.String(64), unique=True, index=True)
-  password_hash = db.Column(db.String(128))
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  uuid = db.Column(db.Integer, default=uuid4().hex, nullable=False)
+  company_name = db.Column(db.String(32), index=True, unique=True, nullable=False)
+  email = db.Column(db.String(64), unique=True, index=True, nullable=False)
+  password_hash = db.Column(db.String(128), nullable=False)
   date_created = db.Column(db.DateTime, default=datetime.utcnow())
 
   def __init__(self, company_name, email):
@@ -78,11 +78,11 @@ class Location(db.Model):
 
   __tablename__ = 'locations'
 
-  id = db.Column(db.Integer, primary_key=True)
-  country = db.Column(db.String(64))
-  postal_town = db.Column(db.String(64))
-  postal_code = db.Column(db.String(64))
-  postal_address = db.Column(db.String(64))
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  country = db.Column(db.String(64), nullable=False)
+  postal_town = db.Column(db.String(64), nullable=False)
+  postal_code = db.Column(db.String(64), nullable=False)
+  postal_address = db.Column(db.String(64), nullable=False)
   user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
@@ -92,7 +92,7 @@ class Search(db.Model):
   '''
   __tablename__ = 'searches'
 
-  id = db.Column(db.Integer, primary_key=True)
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   search_results_id = db.Column(db.Integer, db.ForeignKey('search_details.id'))
   company_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
@@ -103,7 +103,7 @@ class SearchDetail(db.Model):
   '''
   __tablename__ = 'search_details'
 
-  id = db.Column(db.Integer, primary_key=True)
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   params = db.Column(db.String(128))
   result = db.Column(db.String(64))
 

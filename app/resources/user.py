@@ -20,8 +20,22 @@ class Login(Resource):
 
 
 class Signup(Resource):
+  def get(self):
+    return {'message': 'Hello World'}
+
   def post(self):
-    pass
+    email = User.query.filter_by(email=request.data['email']).first()
+    if email is None:
+      company_name = request.data['company_name']
+      email = request.data['email']
+      password = request.data['password']
+      user = User(username=company_name, email=email)
+      user.hash_password(password)
+      user.save()
+      token = User.generate_token(user.uuid)
+
+    return user, token, 201
+
 
 class Logout(Resource):
   def post(self):
