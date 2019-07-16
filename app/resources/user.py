@@ -43,7 +43,7 @@ class Login(Resource):
 
 
 
-class Signup(Resource):
+class Register(Resource):
   def post(self):
     '''
     create a new user

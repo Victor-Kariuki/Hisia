@@ -97,3 +97,23 @@ class SearchDetail(db.Model):
   params = db.Column(db.String(128))
   result = db.Column(db.String(64))
 
+
+class Message(db.Model):
+  '''
+  create messages table
+  '''
+
+  __tablename__ = 'messages'
+
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  email = db.Column(db.String(128), nullable=False)
+  message = db.Column(db.String(128), nullable=False)
+
+
+  def __init__(self, email, message):
+    self.email = email
+    self.message = message
+
+  def save(self):
+    db.session.save(self)
+    db.session.commit()
