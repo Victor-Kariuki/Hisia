@@ -83,8 +83,10 @@ class Search(db.Model):
   __tablename__ = 'searches'
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  search_params = db.Column(db.String(128))
   search_results_id = db.Column(db.Integer, db.ForeignKey('search_details.id'))
   company_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+  created_at = db.Column(db.DateTime, default=datetime.utcnow())
 
 
 class SearchDetail(db.Model):
@@ -94,8 +96,8 @@ class SearchDetail(db.Model):
   __tablename__ = 'search_details'
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-  params = db.Column(db.String(128))
   result = db.Column(db.String(64))
+  created_at = db.Column(db.DateTime, default=datetime.utcnow())
 
 
 class Message(db.Model):
@@ -108,6 +110,7 @@ class Message(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   email = db.Column(db.String(128), nullable=False)
   message = db.Column(db.String(128), nullable=False)
+  created_at = db.Column(db.DateTime, default=datetime.utcnow())
 
 
   def __init__(self, email, message):
@@ -115,5 +118,5 @@ class Message(db.Model):
     self.message = message
 
   def save(self):
-    db.session.save(self)
+    db.session.add(self)
     db.session.commit()

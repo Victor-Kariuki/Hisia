@@ -42,6 +42,7 @@ def create_app(env_name):
   # resources imports
   from app.resources.user import Users, Login, Register, Logout, Profile
   from app.resources.message import Text
+  from app.resources.streamer import Tweets
 
   # register resources
   api.add_resource(Users, '/api/v1/users', endpoint = 'users')
@@ -50,5 +51,6 @@ def create_app(env_name):
   api.add_resource(Register, '/api/v1/register')
   api.add_resource(Logout, '/api/v1/logout')
   api.add_resource(Text, '/api/v1/contact')
+  api.add_resource(Tweets, '/api/v1/tweets')
 
   return app

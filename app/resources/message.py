@@ -32,7 +32,7 @@ class Text(Resource):
       except Exception as e:
         response = {
           'status': 'Failed',
-          'data': e,
+          'data': str(e),
           'message': 'Message not sent'
         }
 

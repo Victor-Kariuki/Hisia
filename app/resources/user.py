@@ -88,9 +88,7 @@ class Logout(Resource):
 
 class Profile(Resource):
   def get(self):
-    users = User.get_all()
-    users = users_schema.dump(users).data
-
+    pass
 
   def put(self, user_id):
     pass

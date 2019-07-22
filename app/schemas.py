@@ -31,4 +31,4 @@ class SearchSchema(ma.Schema):
   '''
 
   class Meta:
-    fields = ()
+    fields = ('search_params', 'company_id')
