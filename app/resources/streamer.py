@@ -55,17 +55,17 @@ class Tweets(Resource):
     hashtag = request.get_json().get('hashtag');
     if hashtag is not None:
       parsed_tweets = []
-      raw_tweets = tweepy.Cursor(api.search, q=hashtag, result_type="recent", lang="en").items(1000)
+      raw_tweets = tweepy.Cursor(api.search, q=hashtag, result_type="recent", lang="en", tweet_mode='extended').items(1000)
       for tweet in raw_tweets:
         parsed_tweet = {}
         if (tweet.user.location is not ""):
           parsed_tweet['id'] = tweet.id
           parsed_tweet['name'] = tweet.user.name
-          parsed_tweet['body'] = tweet.text
+          parsed_tweet['body'] = tweet.full_text
           parsed_tweet['location'] = tweet.user.location
           parsed_tweet['retweets'] = tweet.retweet_count
           parsed_tweet['likes'] = tweet.favorite_count
-          parsed_tweet['polarity'] = get_tweet_sentiment(tweet.text)
+          parsed_tweet['polarity'] = get_tweet_sentiment(tweet.full_text)
           parsed_tweet['image'] = tweet.user.profile_image_url
           parsed_tweets.append(parsed_tweet)
       try:
