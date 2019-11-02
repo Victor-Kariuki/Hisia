@@ -17,7 +17,7 @@ MarkupSafe==1.1.1
 marshmallow==2.19.5
 marshmallow-sqlalchemy==0.17.0
 mysqlclient==1.4.2.post1
-nltk==3.4.4
+nltk==3.4.5
 oauthlib==3.0.1
 PySocks==1.7.0
 python-dateutil==2.8.0
